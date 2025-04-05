@@ -1,0 +1,8 @@
+plots/
+plots2/
+__pycache__/
+case1.py 
+case2.py 
+draw1.py 
+draw2.py
+*.csv
