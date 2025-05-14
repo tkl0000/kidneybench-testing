@@ -45,13 +45,13 @@ center.add_edge("City_Med", "Regional_Care", travel_time=2.0)
 center.add_edge("General_Hospital", "Regional_Care", travel_time=3.0)
 
 # Optionally, plug in a custom matching strategy.
-# def custom_strategy(patient, organ):
-#     if not blood_type_compatible(organ.blood_type, patient.blood_type):
-#         return 0.0
-#     if not patient.crossmatch(organ):
-#         return 0.0
-#     return 1.0 + 0.3 * patient.wait_time + 1.2 * patient.urgency
-# center.matching_strategy = custom_strategy
+def custom_strategy(patient, organ):
+    if not blood_type_compatible(organ.blood_type, patient.blood_type):
+        return 0.0
+    if not patient.crossmatch(organ):
+        return 0.0
+    return 1.0 + 0.3 * patient.wait_time + 1.2 * patient.urgency
+center.matching_strategy = custom_strategy
 
 # Run the simulation.
 sim = Simulation(center, steps=365 * 1, organ_probability=0.7, patient_probability=0.3)
@@ -71,3 +71,24 @@ Simulation.parameter_sweep(param_ranges, steps=365 * 1, runs_per_combination=3)
 
 - Aniruth Ananthanarayanan
 - Benjamin Zijan Hu
+- Alex Sha
+
+## Citation
+If you use KidneyBench, please cite us as follows:
+
+> Ananthananarayanan, Aniruth, Benjamin Hu, and Alex Sha. ‘Network-Based Kidney Allocation Simulation: Evaluating Organ Matching Strategies in Variable Hospital Networks’. _bioRxiv_, 2025. https://doi.org/10.1101/2025.04.22.650043.
+
+BibTex:
+```
+@article {Ananthananarayanan2025.04.22.650043,
+	author = {Ananthananarayanan, Aniruth and Hu, Benjamin and Sha, Alex},
+	title = {Network-Based Kidney Allocation Simulation: Evaluating Organ Matching Strategies in Variable Hospital Networks},
+	elocation-id = {2025.04.22.650043},
+	year = {2025},
+	doi = {10.1101/2025.04.22.650043},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2025/04/25/2025.04.22.650043},
+	eprint = {https://www.biorxiv.org/content/early/2025/04/25/2025.04.22.650043.full.pdf},
+	journal = {bioRxiv}
+}
+```
