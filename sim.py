@@ -471,6 +471,9 @@ class TransplantCenter:
                 neighbors.append((h2, t))
         return neighbors
 
+    # TODO - Rightnow this just matches everything in local hopsitals; implement inter-hospital matching as well as 
+    # method of passing a better matching strategy
+
     @log_call
     def perform_network_matching(self):
         """
