@@ -1,4 +1,4 @@
-from sim import TransplantCenter, Hospital, Simulation
+from utils.sim import TransplantCenter, Hospital, Simulation
 
 center = TransplantCenter()
 hosp1 = Hospital("Hospital A")

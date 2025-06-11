@@ -7,3 +7,4 @@ draw1.py
 draw2.py
 *.csv
 venv
+lib/

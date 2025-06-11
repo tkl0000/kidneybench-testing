@@ -1,5 +1,5 @@
 # Import necessary components.
-from sim import (blood_type_compatible, hla_match_score, 
+from utils.sim import (blood_type_compatible, hla_match_score, 
     default_matching_strategy, Simulation, 
     TransplantCenter, Hospital)
 
