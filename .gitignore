@@ -8,3 +8,4 @@ draw2.py
 *.csv
 venv
 lib/
+.vscode/
