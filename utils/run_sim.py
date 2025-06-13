@@ -33,6 +33,8 @@ def run(outcomes_path, decisions_path):
     metrics = sim.calculate_metrics()
     sim.save_logs(outcomes_path, decisions_path)
 
+    return metrics
+
     # # Run a parameter sweep.
     # param_ranges = {
     #     "organ_probability": [0.6, 0.7, 0.8],

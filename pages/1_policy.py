@@ -30,8 +30,13 @@ match policy_type:
     case _:
         st.write("Error selecting policy type.")
 
-def generate_paths():
-    return './logs/outcomes/' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.csv', './logs/decisions/' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.txt' 
+def generate_paths(name):
+    if len(name) == 0:
+        name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    return f'./logs/outcomes/{name}.csv', f'./logs/decisions/{name}.txt'
 
-outcomes_path, decisions_path = generate_paths()
+name = st.text_input('Log name (Optional):')
+
+outcomes_path, decisions_path = generate_paths(name)
+
 st.button("Run", on_click=lambda: run(outcomes_path, decisions_path))

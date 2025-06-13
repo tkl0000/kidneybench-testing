@@ -9,7 +9,9 @@ if len(log_paths) == 0:
     st.write("No logs saved.")
     exit()
 
-selected = st.selectbox("Select log to view: ", log_paths)
+log_1, log_2 = st.columns(2)
+selected_1 = log_1.selectbox('Select log 1: ', log_paths, key=1)
+selected_2 = log_2.selectbox('Select log 2: ', log_paths, key=2)
 
 def extract_metrics(filepath):
     df = pd.read_csv(filepath)
@@ -26,21 +28,3 @@ def extract_metrics(filepath):
     return {
         "match_rate" : match_rate,
     }
-
-decisions_path = f'./logs/decisions/{selected}.txt'
-outcomes_path = f'./logs/outcomes/{selected}.csv'
-
-outcomes_metrics = extract_metrics(outcomes_path)
-
-# st.write("**Outcomes**")
-# st.dataframe(pd.read_csv(outcomes_path))
-
-# st.write("**Decisions**")
-# st.dataframe(pd.read_csv(decisions_path))
-
-st.table(outcomes_metrics)
-
-# for k, v in outcomes_metrics.items():
-#     print(k, v)
-#     st.write(f'**{k}**')
-#     st.write(f'{v}')
