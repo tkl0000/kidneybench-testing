@@ -7,7 +7,6 @@ from run_sim import run
 import streamlit as st
 from datetime import datetime
 
-
 options = ["greedy", ".pth"]
 policy_type = st.selectbox("Select policy type: ", options)
 

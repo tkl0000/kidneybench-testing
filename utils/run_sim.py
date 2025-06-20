@@ -1,6 +1,6 @@
 def run(outcomes_path, decisions_path):
     # Import necessary components.
-    from utils.sim import (blood_type_compatible, hla_match_score, 
+    from sim import (blood_type_compatible, hla_match_score, 
         default_matching_strategy, Simulation, 
         TransplantCenter, Hospital)
 
