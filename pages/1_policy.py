@@ -32,6 +32,8 @@ match policy_type:
 def generate_paths(name):
     if len(name) == 0:
         name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    os.makedirs('./logs/outcomes', exist_ok=True)
+    os.makedirs('./logs/decisions', exist_ok=True)
     return f'./logs/outcomes/{name}.csv', f'./logs/decisions/{name}.txt'
 
 name = st.text_input('Log name (Optional):')
