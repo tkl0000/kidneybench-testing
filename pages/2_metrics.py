@@ -18,14 +18,23 @@ decisions_path = f'./logs/decisions/{selected}.txt'
 outcomes_path = f'./logs/outcomes/{selected}.csv'
 
 outcomes_metrics = metrics.extract_metrics(outcomes_path)
+wait_times = metrics.extract_wait_times(outcomes_path)
+matching_scores = metrics.extract_matching_scores(outcomes_path)
+
+st.write("**Metrics**")
+st.table(outcomes_metrics)
+
+st.write("**Wait Times**")
+st.bar_chart(wait_times)
+
+st.write("**Matching Scores**")
+st.bar_chart(matching_scores)
 
 # st.write("**Outcomes**")
 # st.dataframe(pd.read_csv(outcomes_path))
 
 # st.write("**Decisions**")
 # st.dataframe(pd.read_csv(decisions_path))
-
-st.table(outcomes_metrics)
 
 # for k, v in outcomes_metrics.items():
 #     print(k, v)

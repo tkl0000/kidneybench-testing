@@ -505,7 +505,7 @@ class Simulation:
       - calculate_metrics(): Compute many evaluation metrics.
       - parameter_sweep(): Run simulations over a grid of parameters.
     """
-    def __init__(self, center: TransplantCenter, steps=10, organ_probability=0.7, patient_probability=0.3):
+    def __init__(self, center: TransplantCenter, steps=10, organ_probability=0.7, patient_probability=0.3, seed=None):
         """
         Initializes a Simulation instance.
         
@@ -514,7 +514,10 @@ class Simulation:
             steps (int, optional): The number of simulation steps. Defaults to 10.
             organ_probability (float, optional): The probability of organ arrival. Defaults to 0.7.
             patient_probability (float, optional): The probability of patient arrival. Defaults to 0.3.
+            seed (int, optional): Random seed for reproducibility. Defaults to None.
         """
+        if seed is not None:
+            random.seed(seed)
         self.center = center
         self.current_time = 0
         self.steps = steps

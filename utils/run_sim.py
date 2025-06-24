@@ -1,4 +1,4 @@
-def run(outcomes_path, decisions_path):
+def run(outcomes_path, decisions_path, seed):
     # Import necessary components.
     from sim import (blood_type_compatible, hla_match_score, 
         default_matching_strategy, Simulation, 
@@ -28,7 +28,7 @@ def run(outcomes_path, decisions_path):
     center.matching_strategy = custom_strategy
 
     # Run the simulation.
-    sim = Simulation(center, steps=365 * 1, organ_probability=0.7, patient_probability=0.3)
+    sim = Simulation(center, steps=365 * 1, organ_probability=0.7, patient_probability=0.3, seed=seed)
     sim.run()
     metrics = sim.calculate_metrics()
     sim.save_logs(outcomes_path, decisions_path)

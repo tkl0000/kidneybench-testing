@@ -6,6 +6,8 @@ def extract_metrics(filepath):
     df = pd.read_csv(filepath)
 
     avg_wait = df['patient_wait_time'].mean()
+    stdev_wait = df['patient_wait_time'].std()
+    stderr_wait = df['patient_wait_time'].sem()
     avg_matching_score = df['matching_score'].mean()
     stdev_matching_score = df['matching_score'].std()
     stderr_matching_score = df['matching_score'].sem()
@@ -19,10 +21,20 @@ def extract_metrics(filepath):
     return {
         "match_rate" : match_rate,
         "avg_wait" : avg_wait,
+        "stdev_wait" : stdev_wait,
+        "stderr_wait" : stderr_wait,
         "avg_matching_score" : avg_matching_score,
         "stdev_matching_score" : stdev_matching_score,
         "stderr_matching_score" : stderr_matching_score,
     }
+
+def extract_wait_times(filepath):
+    df = pd.read_csv(filepath)
+    return df['patient_wait_time'].values
+
+def extract_matching_scores(filepath):
+    df = pd.read_csv(filepath)
+    return df['matching_score'].values
 
 def bootstrap_ci(diff_array, num_samples=10000, ci=0.95):
     bootstrapped_means = []

@@ -1,3 +1,4 @@
+import random
 import sys
 import os 
 module_path = os.path.relpath('./utils')
@@ -29,15 +30,20 @@ match policy_type:
     case _:
         st.write("Error selecting policy type.")
 
-def generate_paths(name):
+def generate_paths(name, seed):
     if len(name) == 0:
-        name = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        name = f'{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}_{seed}'
     os.makedirs('./logs/outcomes', exist_ok=True)
     os.makedirs('./logs/decisions', exist_ok=True)
     return f'./logs/outcomes/{name}.csv', f'./logs/decisions/{name}.txt'
 
 name = st.text_input('Log name (Optional):')
+seed = st.text_input('Seed (Optional):')
+if (seed == ''):
+    seed = random.randint(0, 1000000)
+else:
+    seed = int(seed)
 
-outcomes_path, decisions_path = generate_paths(name)
+outcomes_path, decisions_path = generate_paths(name, seed)
 
-st.button("Run", on_click=lambda: run(outcomes_path, decisions_path))
+st.button("Run", on_click=lambda: run(outcomes_path, decisions_path, seed))
