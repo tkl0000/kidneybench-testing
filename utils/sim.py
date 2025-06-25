@@ -344,7 +344,7 @@ class Hospital:
         self.organs.append(organ)
 
     @log_call
-    def perform_matching(self, matching_strategy=None, extra_penalty=0.0):
+    def perform_matching(self, donor_hospital: 'Hospital', matching_strategy=None, extra_penalty=0.0, ):
         """
         Matches available organs to patients.
         An extra penalty (e.g., for inter-hospital transfers) can be applied.
@@ -357,8 +357,14 @@ class Hospital:
         Returns:
             dict: A dictionary mapping organ IDs to patient IDs.
         """
+
+        if (donor_hospital == None):
+            donor_hospital = self
+
+        # print(self.name, "performing matching with donor hospital", donor_hospital.name)
+
         matches = {}
-        for organ in self.organs:
+        for organ in donor_hospital.organs:
             best_score = -1.0
             best_patient = None
             for patient in self.patients:
@@ -371,6 +377,7 @@ class Hospital:
                 matches[organ.id] = best_patient.id
                 decision = {
                     "hospital": self.name,
+                    "donor_hospital": donor_hospital.name,
                     "organ_id": organ.id,
                     "donor_id": organ.donor.id,
                     "donor_type": organ.donor.donation_type,
@@ -486,8 +493,19 @@ class TransplantCenter:
         """
         network_matches = {}
         for hosp in self.hospitals.values():
-            local_matches = hosp.perform_matching(matching_strategy=self.matching_strategy)
-            network_matches.update({f"{hosp.name}:{org_id}": patient_id for org_id, patient_id in local_matches.items()})
+            local_matches = hosp.perform_matching(matching_strategy=self.matching_strategy, donor_hospital=hosp)
+            hosp_neighbors = self.get_neighbors(hosp.name)
+            for neighbor_name, travel_time in hosp_neighbors:
+                # Apply extra penalty based on travel time (e.g., 10% per hour).
+                extra_penalty = 0.1 * travel_time / 24  # Convert hours to days
+                neighbor_hospital = self.hospitals[neighbor_name]
+                if (hosp != neighbor_hospital): 
+                    neighbor_matches = hosp.perform_matching(
+                        matching_strategy=self.matching_strategy,
+                        extra_penalty=extra_penalty,
+                        donor_hospital=neighbor_hospital
+                    )
+            # network_matches.update({f"{hosp.name}:{org_id}": patient_id for org_id, patient_id in local_matches.items()})
         return network_matches
 
 # -------------------------------------

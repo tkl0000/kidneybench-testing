@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import os
 import sys
+import plotly.express as px
 module_path = os.path.relpath('./utils')
 sys.path.insert(1, module_path) # Insert at the beginning of the search path
 import metrics
@@ -24,11 +25,8 @@ matching_scores = metrics.extract_matching_scores(outcomes_path)
 st.write("**Metrics**")
 st.table(outcomes_metrics)
 
-st.write("**Wait Times**")
-st.bar_chart(wait_times)
-
-st.write("**Matching Scores**")
-st.bar_chart(matching_scores)
+st.plotly_chart(px.histogram(wait_times, nbins=50, title="Wait Times Histogram"))
+st.plotly_chart(px.histogram(matching_scores, nbins=50, title="Matching Scores Histogram"))
 
 # st.write("**Outcomes**")
 # st.dataframe(pd.read_csv(outcomes_path))
