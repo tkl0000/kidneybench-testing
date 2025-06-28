@@ -35,7 +35,6 @@ for _, row in df.iterrows():
         color="green"
     )
 
-    # Add edge
     edge_label = f"{row['matching_score']:.1f} ({row['transplant_outcome']})"
     net.add_edge(donor, patient, value=row['matching_score'], title=edge_label)
 
